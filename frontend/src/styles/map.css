@@ -1,0 +1,237 @@
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.container-fluid {
+  height: 100vh;
+}
+
+.row {
+  height: 100vh;
+}
+
+.sidebar {
+  height: 100vh;
+  background: #ffffff;
+  padding: 20px;
+  border-right: 1px solid #e5e7eb;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.logo {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.sidebar-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.sidebar-header p {
+  color: #666;
+  font-size: 14px;
+}
+
+.card-box {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card-box h5 {
+  margin-bottom: 12px;
+  color: #1A73E8;
+  font-weight: 600;
+  font-size: 16px;
+}
+.search-results {
+  margin-top: 10px;
+}
+
+.search-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px;
+  margin-bottom: 10px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  background: white;
+
+  transition: 0.2s;
+}
+
+.search-card:hover {
+  background: #f8fafc;
+}
+
+.place-name {
+  margin: 0;
+  font-weight: 600;
+}
+
+.place-category {
+  margin: 4px 0;
+  color: #1A73E8;
+  font-size: 13px;
+}
+
+.place-address {
+  margin: 0;
+  color: #666;
+  font-size: 12px;
+}
+
+.no-result {
+  padding: 10px;
+  color: #888;
+  text-align: center;
+}
+.category-btn {
+  width: 100%;
+  border: none;
+  background: #f3f4f6;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  margin-bottom: 8px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.category-btn:hover {
+  background: #1A73E8;
+  color: white;
+}
+.place-popup {
+  min-width: 220px;
+}
+
+.place-popup h5 {
+  margin-bottom: 10px;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.popup-actions button {
+  flex: 1;
+}
+.route-result {
+  margin-top: 15px;
+}
+
+.route-destination {
+  margin-bottom: 15px;
+}
+.route-empty {
+  color: #666;
+  text-align: center;
+  padding: 15px;
+}
+
+.route-card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.route-point {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.route-point span {
+  font-size: 20px;
+}
+
+.route-point small {
+  color: #888;
+}
+
+.route-point p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.route-line {
+  width: 2px;
+  height: 20px;
+  background: #d1d5db;
+  margin: 8px 9px;
+}
+
+.route-info-card {
+  margin-top: 15px;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.info-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-item span {
+  font-size: 20px;
+}
+
+.info-item p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.info-item small {
+  color: #888;
+}
+.gps-btn {
+  width: 100%;
+  border: none;
+  background: #1A73E8;
+  color: white;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.gps-btn:hover {
+  background: #1557b0;
+}
