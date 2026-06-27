@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Chức Năng Tìm Đường</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <style>
+      /* Nút định vị GPS góc dưới bên phải */
+      #gps-btn {
+        position: absolute;
+        bottom: 40px;
+        right: 20px;
+        z-index: 1000;
+        background: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+      }
+      #gps-btn:hover {
+        background: #f0f0f0;
+      }
+      /* Style cho bảng danh sách địa điểm bên trái */
+      #places-panel {
+        position: absolute;
+        top: 130px; /* Nằm dưới các nút filter */
+        left: 50px;
+        z-index: 1000;
+        width: 340px;
+        max-height: calc(100vh - 160px);
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        display: none; /* Mặc định ẩn */
+        overflow-y: auto;
+        font-family: Arial, sans-serif;
+      }
+
+      .place-card {
+        display: flex;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        gap: 15px;
+        transition: 0.2s;
+      }
+
+      .place-card:hover {
+        background: #f9f9f9;
+      }
+
+      .place-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        flex-shrink: 0;
+      }
+
+      .place-info {
+        flex-grow: 1;
+      }
+      .place-info h4 {
+        margin: 0 0 5px 0;
+        font-size: 15px;
+        color: #202124;
+      }
+      .place-info p {
+        margin: 0 0 8px 0;
+        font-size: 13px;
+        color: #70757a;
+      }
+
+      .action-btn {
+        background: #e8f0fe;
+        color: #1a73e8;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 15px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .action-btn:hover {
+        background: #d2e3fc;
+      }
+
+      #close-panel-btn {
+        position: sticky;
+        top: 0;
+        background: #f1f3f4;
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+        border-bottom: 1px solid #ddd;
+        z-index: 10;
+      }
+      /* Style cho thanh trượt nút gợi ý */
+      #quick-filters {
+        position: absolute;
+        top: 70px; /* Nằm ngay dưới ô tìm kiếm */
+        left: 50px;
+        z-index: 1000;
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        max-width: calc(100vw - 100px);
+        padding: 5px 0;
+      }
+
+      /* Style cho từng nút giống Google Maps */
+      .filter-btn {
+        background: white;
+        border: 1px solid #ccc;
+        padding: 8px 15px;
+        border-radius: 20px; /* Bo tròn viền */
+        cursor: pointer;
+        font-size: 13px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: 0.2s;
+      }
+
+      .filter-btn:hover {
+        background: #f0f0f0;
+        border-color: #999;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+      #map {
+        width: 100vw;
+        height: 100vh;
+      } /* Cho bản đồ full màn hình */
+    </style>
+  </head>
+  <body>
+    <div
+      id="routing-info"
+      style="
+        display: none;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      "
+    >
+      <h4 style="margin: 0 0 10px 0">Thông tin tuyến đường</h4>
+      <p style="margin: 5px 0">
+        📏 Khoảng cách: <strong id="route-dist">0</strong> km
+      </p>
+      <p style="margin: 5px 0">
+        ⏱️ Thời gian: <strong id="route-time">0</strong> phút
+      </p>
+      <button onclick="clearRoute()" style="margin-top: 10px; width: 100%">
+        Hủy tìm đường
+      </button>
+    </div>
+    <div id="quick-filters">
+      <button
+        class="filter-btn"
+        onclick="findNearby('restaurant', 'Nhà hàng', '🍽️')"
+      >
+        🍽️ Nhà hàng
+      </button>
+      <button
+        class="filter-btn"
+        onclick="findNearby('cafe', 'Quán cà phê', '☕')"
+      >
+        ☕ Quán cà phê
+      </button>
+      <button
+        class="filter-btn"
+        onclick="findNearby('hotel', 'Khách sạn', '🏨')"
+      >
+        🏨 Khách sạn
+      </button>
+      <button
+        class="filter-btn"
+        onclick="findNearby('hospital', 'Bệnh viện', '🏥')"
+      >
+        🏥 Bệnh viện
+      </button>
+      <button
+        class="filter-btn"
+        onclick="findNearby('fuel', 'Trạm xăng', '⛽')"
+      >
+        ⛽ Trạm xăng
+      </button>
+    </div>
+    <div id="places-panel">
+      <div
+        id="close-panel-btn"
+        onclick="
+          document.getElementById('places-panel').style.display = 'none';
+          poiLayer.clearLayers();
+        "
+      >
+        Đóng danh sách ⬇️
+      </div>
+      <div id="places-list-content"></div>
+    </div>
+    <div
+      id="search-container"
+      style="
+        position: absolute;
+        top: 20px;
+        left: 50px;
+        z-index: 1000;
+        background: white;
+        padding: 8px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        width: 300px;
+      "
+    >
+      <div style="display: flex; gap: 8px">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Tìm kiếm ở đây"
+          style="
+            padding: 8px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+          "
+        />
+        <button
+          onclick="triggerSearch()"
+          style="
+            padding: 8px 15px;
+            cursor: pointer;
+            background: #0078ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+          "
+        >
+          Tìm
+        </button>
+      </div>
+      <ul
+        id="suggestions-list"
+        style="
+          list-style: none;
+          margin: 8px 0 0 0;
+          padding: 0;
+          max-height: 250px;
+          overflow-y: auto;
+          display: none;
+          border-top: 1px solid #eee;
+        "
+      ></ul>
+    </div>
+    <button id="gps-btn" onclick="locateUser()" title="Vị trí của tôi">
+      🎯
+    </button>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="main.js"></script>
+  </body>
+</html>

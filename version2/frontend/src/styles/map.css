@@ -1,0 +1,610 @@
+/* =============================================
+   Map Page Styles — Sidebar, Map Controls, Legend
+   ============================================= */
+
+/* --- Map Page Layout --- */
+.map-page {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  z-index: 90;
+  background: rgba(248, 249, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(191, 199, 209, 0.2);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-normal);
+  transform: translateX(0);
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-logo {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 93, 144, 0.1);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-logo .material-symbols-outlined {
+  color: var(--primary);
+}
+
+.sidebar-brand {
+  flex: 1;
+}
+
+.sidebar-brand h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--on-surface);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.sidebar-brand p {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+/* --- Search Results (inside sidebar) --- */
+.search-results {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.search-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid rgba(191, 199, 209, 0.3);
+  border-radius: var(--radius);
+  background: var(--surface-container-lowest);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.search-card:hover {
+  background: var(--surface-container-low);
+  border-color: var(--primary-fixed-dim);
+}
+
+.search-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.place-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.place-category {
+  font-size: 12px;
+  color: var(--primary);
+  margin: 2px 0;
+  font-weight: 500;
+}
+
+.place-address {
+  font-size: 11px;
+  color: var(--on-surface-variant);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-card .btn-view {
+  flex-shrink: 0;
+  margin-left: 8px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.search-card .btn-view:hover {
+  background: var(--primary-container);
+}
+
+.no-result {
+  text-align: center;
+  padding: 12px;
+  color: var(--on-surface-variant);
+  font-size: 14px;
+}
+
+/* --- Place Info (sidebar section) --- */
+.place-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: var(--on-surface);
+}
+
+.place-info p strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* --- Route Panel --- */
+.route-empty {
+  text-align: center;
+  padding: 12px;
+  color: var(--on-surface-variant);
+  font-size: 14px;
+}
+
+.route-card {
+  background: var(--surface-container-low);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.route-point {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.route-point .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.route-point small {
+  font-size: 11px;
+  color: var(--on-surface-variant);
+  display: block;
+}
+
+.route-point p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.route-line {
+  width: 2px;
+  height: 20px;
+  background: var(--outline-variant);
+  margin: 4px 9px;
+}
+
+.route-info-card {
+  margin-top: 12px;
+  background: var(--surface-container-low);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.info-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-item .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--primary);
+}
+
+.info-item small {
+  font-size: 11px;
+  color: var(--on-surface-variant);
+  display: block;
+}
+
+.info-item p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.route-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.route-btn:hover {
+  background: var(--primary-container);
+}
+
+.route-btn:active {
+  transform: scale(0.97);
+}
+
+/* --- Layer Control --- */
+.layer-control {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.layer-control label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--on-surface);
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  transition: background var(--transition-fast);
+}
+
+.layer-control label:hover {
+  background: var(--surface-container-low);
+}
+
+.layer-control input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* --- Map Container --- */
+.map-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.map-container .leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* --- Map Controls Strip (bottom right) --- */
+.map-controls {
+  position: absolute;
+  bottom: var(--map-inset);
+  right: var(--map-inset);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-controls-group {
+  background: var(--surface-container-lowest);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(191, 199, 209, 0.3);
+  overflow: hidden;
+}
+
+.map-control-btn {
+  padding: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--on-surface);
+  transition: background var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-control-btn:hover {
+  background: var(--surface-container-high);
+}
+
+.map-control-btn + .map-control-btn {
+  border-top: 1px solid rgba(191, 199, 209, 0.2);
+}
+
+.map-control-single {
+  padding: 12px;
+  border: none;
+  background: var(--surface-container-lowest);
+  cursor: pointer;
+  color: var(--on-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(191, 199, 209, 0.3);
+  transition: background var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-control-single:hover {
+  background: var(--surface-container-high);
+}
+
+/* --- Legend Panel (bottom, offset by sidebar) --- */
+.legend-panel {
+  position: absolute;
+  bottom: var(--map-inset);
+  left: calc(var(--sidebar-width) + 20px);
+  z-index: 50;
+  background: rgba(248, 249, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 16px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(191, 199, 209, 0.3);
+  max-width: 280px;
+}
+
+.legend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.legend-header h4 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.legend-item:last-child {
+  margin-bottom: 0;
+}
+
+.legend-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.legend-swatch-dashed {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  border: 2px dashed var(--primary);
+  background: rgba(0, 93, 144, 0.1);
+}
+
+.legend-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+/* --- Sidebar Toggle (Mobile) --- */
+.sidebar-toggle-btn {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: 110;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-xl);
+  cursor: pointer;
+  display: none;
+  transition: all var(--transition-fast);
+}
+
+.sidebar-toggle-btn:hover {
+  background: var(--primary-container);
+}
+
+.sidebar-toggle-btn.visible {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Map Popup (Leaflet override) --- */
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow-md) !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  min-width: 220px;
+}
+
+.place-popup {
+  padding: 16px;
+}
+
+.place-popup h5 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.place-popup hr {
+  border: none;
+  border-top: 1px solid var(--outline-variant);
+  margin: 8px 0;
+}
+
+.place-popup p {
+  font-size: 13px;
+  color: var(--on-surface-variant);
+  margin: 4px 0;
+}
+
+.place-popup p strong {
+  color: var(--on-surface);
+}
+
+.popup-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.popup-actions button {
+  flex: 1;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.popup-actions .btn-popup-detail {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.popup-actions .btn-popup-detail:hover {
+  background: var(--primary-container);
+}
+
+.popup-actions .btn-popup-route {
+  background: var(--secondary);
+  color: var(--on-secondary);
+}
+
+.popup-actions .btn-popup-route:hover {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+}
+
+/* --- GPS Button --- */
+.gps-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.gps-btn:hover {
+  background: var(--primary-container);
+}
+
+.gps-btn:active {
+  transform: scale(0.97);
+}
+
+/* --- Hide default leaflet zoom control --- */
+.leaflet-control-zoom {
+  display: none !important;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .legend-panel {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .sidebar-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sidebar.collapsed + .sidebar-toggle-btn {
+    display: flex;
+  }
+}

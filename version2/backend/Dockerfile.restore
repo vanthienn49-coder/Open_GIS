@@ -1,0 +1,8 @@
+FROM pgrouting/pgrouting:17-3.5-3.8
+
+COPY Webgis_QuyNhon.backup /restore/Webgis_QuyNhon.backup
+COPY docker/restore-remote.sh /restore/restore-remote.sh
+
+RUN chmod +x /restore/restore-remote.sh
+
+ENTRYPOINT ["/restore/restore-remote.sh"]
